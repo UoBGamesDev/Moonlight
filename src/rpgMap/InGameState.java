@@ -1,11 +1,13 @@
 package rpgMap;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -17,10 +19,12 @@ public class InGameState extends BasicGameState {
 	 */
 	int stateID = -1;
 	Image greenGrass = null;
-	Image charDown, charLeft, charRight, charUp, charCurr;
+	Image charDown, charLeft, charRight, charUp, charCurr, textBox;
 	float mapX = 0, mapY = 0;
-	boolean mapMoving = false;
+	boolean mapMoving = false, textOn = false;
 	int mapDirection = 2;
+	Font font;
+	TrueTypeFont ttf;
 
 	/**
 	 * Constructor to create this object.
@@ -39,6 +43,7 @@ public class InGameState extends BasicGameState {
 		charUp = new Image("data/charUp.png");
 		charLeft = new Image("data/charLeft.png");
 		charRight = new Image("data/charRight.png");
+		textBox = new Image("data/blankTextBox.png");
 		charCurr = charDown;
 
 	}
@@ -46,8 +51,14 @@ public class InGameState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		greenGrass.draw(mapX, mapY);
-		//set this to draw at something better than 400,400
-		charCurr.draw(400, 400);
+		// set this to draw at something better than 400,400
+		charCurr.draw(384, 256);
+		if (textOn) {
+			textBox.draw(0,400);
+			org.newdawn.slick.Color color = org.newdawn.slick.Color.red;
+			g.setColor(color );
+			g.drawString("Test", 20, 420);
+		}
 
 	}
 
@@ -83,6 +94,8 @@ public class InGameState extends BasicGameState {
 			charCurr = charDown;
 			mapMoving = true;
 			mapDirection = 2;
+		} else if(input.isKeyPressed(Input.KEY_SPACE)){
+			textOn=!textOn;
 		}
 	}
 

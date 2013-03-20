@@ -9,7 +9,6 @@ public class MainClass extends StateBasedGame {
 
 	public MainClass() {
 		super("JRPG Main Class");
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -22,7 +21,7 @@ public class MainClass extends StateBasedGame {
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new MainClass());
 
-		app.setDisplayMode(800, 600, false);
+		app.setDisplayMode(960, 640, false);
 		app.start();
 	}
 
