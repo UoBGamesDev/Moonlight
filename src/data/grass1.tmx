@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="tileSetWIP.png" width="2048" height="1536"/>
+  <tile id="967">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1028">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="interact" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJytlEsOwzAIRCu5vf+ZHH+P1VTiSS8kyy5QbAMzeMDZ5fXaf7Z+WjttnLZOO+LbYj1TPGdTceMBr8W6RtyI3B77HT7zNq3NN5RXxTlj32MNJ9YUv8VZVYu/xubMeV0cuT5zbN2XutC1ply04QxNZ9Jyxd61UVMXZ33A8x3Jc27mWOWqn/GqzjwLaOc+9XLtzyrPM7Xkw4+u6GH9R7nPmfGqYqbyZ8o5yr0OOPO8W5enutA1zy9x7N1XzwQ9Ah+9puL8vozfE9YQ1kxfZpU7wOH6mCP6ge+X93lf3yt84M6EV4XHjByyPO9V56vc9Vvleicw0d798Rsxr/Ga/GCjo/9x+HxGvX7TxKAJd/F/jH6Bu+Tj/v/+z//sC6e2N70=
+  </data>
+ </layer>
+</map>
