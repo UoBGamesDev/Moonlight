@@ -19,15 +19,36 @@ public class InGameState extends BasicGameState {
 	 * creation in the main class it is allocated in the constructor below.
 	 */
 	int stateID = -1;
+	/*
+	 * Create the TiledMaps to be used in the game.
+	 */
 	private TiledMap grassMap;
-	Image greenGrass;
+	/*
+	 * Create the image and spritesheets.
+	 */
 	Image bigSpriteSheet;
 	SpriteSheet sheety;
-	Image charDown, charLeft, charRight, charUp, charCurr, textBox, player;
+	Image charDown, charLeft, charRight, charUp, charCurr, white;
+	/*
+	 * Create variables to hold the player and map cooridantes (even though
+	 * they're both related and can be inferred from eachother) using playerX =
+	 * ((mapX * -1) / SIZE) + 12; playerY = ((mapY * -1) / SIZE) + 8;
+	 */
 	static float mapX = 0, mapY = 0, playerX = 0, playerY = 0;
-	boolean mapMoving = false, textOn = false, blocked[][], interact[][];
+	// Boolean to declare if the map's moving.
+	boolean mapMoving = false;
+	// arrays to store collision detection information and which interacts are
+	// active.
+	boolean blocked[][], interactActive[];
+	int[][] interact;
+	// Size of the tiles to adjust the Tiled map syncing with collision
+	// detection and interaction arrays.
 	private static final int SIZE = 32;
+	// ints to store which direction the map is moving and which way the player
+	// is facing.
 	int mapDirection = 2, facing = 8;
+	// float array to store the alpha values of moonlight
+	float[] moonAlpha;
 
 	/**
 	 * Constructor to create this object.
@@ -48,8 +69,8 @@ public class InGameState extends BasicGameState {
 		charUp = sheety.getSubImage(1, 3);
 		charLeft = sheety.getSubImage(2, 3);
 		charRight = sheety.getSubImage(3, 3);
+		white = new Image("data/white.png");
 		charCurr = charDown;
-
 		// Maps
 		grassMap = new TiledMap("data/grass1.tmx");
 
@@ -65,33 +86,64 @@ public class InGameState extends BasicGameState {
 				}
 			}
 		}
-		// Interact
-		interact = new boolean[grassMap.getWidth()][grassMap.getHeight()];
+		// Interact. Different int values can be stored to link to different
+		// actions. Be sure to explain what each int stands for and to increase
+		// the interactActive[] array, leaving it +1 of the final value (the
+		// default value for a tile without interaction is set as 0, so the
+		// array needs to count that as well).
+		interact = new int[grassMap.getWidth()][grassMap.getHeight()];
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
-				String value = grassMap.getTileProperty(tileID, "interact",
-						"false");
-				if ("true".equals(value)) {
-					interact[xAxis][yAxis] = true;
+				int value = Integer.parseInt(grassMap.getTileProperty(tileID,
+						"interact", "0"));
+				if (value == 1)/* Testing to see if method works */{
+					interact[xAxis][yAxis] = 1;
+				} else if (value == 2) {
+					interact[xAxis][yAxis] = 2;
 				}
 			}
 		}
+		interactActive = new boolean[3];
+		moonAlpha = new float[] { 0f, 0f, 0f };
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		grassMap.render((int) mapX, (int) mapY);
-		// set this to draw at something better than 400,400
+		grassMap.render((int) mapX, (int) mapY, 0);
 		charCurr.draw(384, 256);
 
 		// How to draw text to screen:
 
-		if (textOn) {
+		if (interactActive[1]) {
+			if (moonAlpha[1] > 0f) {
+				moonAlpha[1] -= 0.01f;
+			}
 			Color color = Color.red;
 			g.setColor(color);
-			g.drawString("Lever on", 20, 420);
+			g.drawString("Interact1", 20, 420);
+
+		} else if (moonAlpha[1] < 1f)
+			moonAlpha[1] += 0.01f;
+		white.setAlpha(moonAlpha[1]);
+		white.draw(mapX + (10 * SIZE), mapY, mapX + (9 * SIZE), mapY
+				+ (10 * SIZE), 32, 0, 0, 10 * SIZE);
+		if (interactActive[2]) {
+			Color color = Color.red;
+			g.setColor(color);
+			g.drawString("Interact2", 20, 420);
+		} else {
+
 		}
+		// Debuging info:
+		Color color = Color.red;
+		g.setColor(color);
+		g.drawString(Integer.toString((int) mapX), 36, 36);
+		g.drawString(Integer.toString((int) mapY), 36, 72);
+		g.setColor(Color.yellow);
+		g.drawString(Integer.toString((int) ((mapX * -1) / SIZE) + 12), 36, 108);
+		g.drawString(Integer.toString((int) ((mapY * -1) / SIZE) + 8), 36, 144);
+		g.drawString(Float.toString(moonAlpha[1]), 36, 160);
 
 	}
 
@@ -116,15 +168,11 @@ public class InGameState extends BasicGameState {
 						mapDirection = t;
 					}
 				} else/* interaction */{
-					if(intDect(t)){
-						textOn=!textOn;
-					}
-					
+					intDect(t);
 				}
 			}
-			// if interaction buttons pressed, handle interaction
-			// if player finished in moonlight, die.
 		}
+		// if player finished in moonlight, die.
 		Display.sync(120);
 	}
 
@@ -159,28 +207,32 @@ public class InGameState extends BasicGameState {
 		return false;
 	}
 
-	private boolean intDect(int dir) {
+	private void intDect(int dir) {
 		playerX = ((mapX * -1) / SIZE) + 12;
 		playerY = ((mapY * -1) / SIZE) + 8;
 		switch (dir) {
 		case 54:
-			if (interact[(int) (playerX - 1)][(int) playerY])
-				return true;
+			int interactNumber4 = interact[(int) (playerX - 1)][(int) playerY];
+			// The additional +1 is to take into consideration the default value
+			// of a tile being 0.
+			interactActive[interactNumber4] = !interactActive[interactNumber4];
 			break;
 		case 56:
-			if (interact[(int) (playerX + 1)][(int) playerY])
-				return true;
+			int interactNumber6 = interact[(int) (playerX + 1)][(int) playerY];
+			interactActive[interactNumber6] = !interactActive[interactNumber6];
+
 			break;
 		case 52:
-			if (interact[(int) (playerX)][(int) playerY + 1])
-				return true;
+			int interactNumber2 = interact[(int) (playerX)][(int) playerY + 1];
+			interactActive[interactNumber2] = !interactActive[interactNumber2];
+
 			break;
 		case 58:
-			if (interact[(int) (playerX)][(int) playerY - 1])
-				return true;
+			int interactNumber8 = interact[(int) (playerX)][(int) playerY - 1];
+			interactActive[interactNumber8] = !interactActive[interactNumber8];
+
 			break;
 		}
-		return false;
 	}
 
 	/**
