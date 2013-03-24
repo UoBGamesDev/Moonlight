@@ -19,15 +19,53 @@
     <property name="interact" value="2"/>
    </properties>
   </tile>
+  <tile id="1088">
+   <properties>
+    <property name="moonlight" value="7"/>
+   </properties>
+  </tile>
+  <tile id="1092">
+   <properties>
+    <property name="die" value="true"/>
+    <property name="moonlight" value="8"/>
+   </properties>
+  </tile>
+  <tile id="1096">
+   <properties>
+    <property name="moonlight" value="9"/>
+   </properties>
+  </tile>
+  <tile id="1152">
+   <properties>
+    <property name="die" value="true"/>
+    <property name="moonlight" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1156">
+   <properties>
+    <property name="die" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1160">
+   <properties>
+    <property name="die" value="true"/>
+    <property name="moonlight" value="3"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="60" height="30">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="Tile Layer 2" width="60" height="30">
+ <layer name="moonlightSpawn for interact 1" width="60" height="30" opacity="0.51">
   <data encoding="base64" compression="zlib">
-   eJztzzENACAQwMAfWPBvGAtMkDR3CtoZuLfX74K3/Lb5bfPb5rfNb5vfNr9tftv8tvlt89vmt80vPx33AgFg
+   eJztz6ENACAQBMEXNIZAUBbiBV2DoATEZ7ObnL1kIv7WW8S4m+3zcdHyeVMvMr3s9LLTy04vO73s9LLTy04vO73s9LLTy04vO73s1vPuot4D4/0oKw==
+  </data>
+ </layer>
+ <layer name="moonLightSpawn for interact 2" width="60" height="30" opacity="0.39">
+  <data encoding="base64" compression="zlib">
+   eJzt1TEOABAMQNEOvZjB4FiGDm7NYGGnUf8l9v4QFQEAAAAAAD9LKpLHKeo9yR02e43ekOiNrc7e9kFv0vV+o//RtvVGf9P0ek90Fr3eE51Vt95Xd1IH+JsYHg==
   </data>
  </layer>
 </map>

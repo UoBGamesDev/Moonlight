@@ -28,7 +28,8 @@ public class InGameState extends BasicGameState {
 	 */
 	Image bigSpriteSheet;
 	SpriteSheet sheety;
-	Image charDown, charLeft, charRight, charUp, charCurr, white;
+	Image charDown, charLeft, charRight, charUp, charCurr, whiteSourse, white,
+			whiteTriangleRight, whiteTriangleLeft;
 	/*
 	 * Create variables to hold the player and map cooridantes (even though
 	 * they're both related and can be inferred from eachother) using playerX =
@@ -41,6 +42,7 @@ public class InGameState extends BasicGameState {
 	// active.
 	boolean blocked[][], interactActive[];
 	int[][] interact;
+	int[][][] moonlightSpawn;// Holds info on the spawnpoints of moonlight
 	// Size of the tiles to adjust the Tiled map syncing with collision
 	// detection and interaction arrays.
 	private static final int SIZE = 32;
@@ -70,6 +72,9 @@ public class InGameState extends BasicGameState {
 		charLeft = sheety.getSubImage(2, 3);
 		charRight = sheety.getSubImage(3, 3);
 		white = new Image("data/white.png");
+		whiteTriangleRight = new Image("data/45slopeWhite.png");
+		whiteTriangleLeft = whiteTriangleRight.getFlippedCopy(true, false);
+
 		charCurr = charDown;
 		// Maps
 		grassMap = new TiledMap("data/grass1.tmx");
@@ -95,46 +100,60 @@ public class InGameState extends BasicGameState {
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
-				int value = Integer.parseInt(grassMap.getTileProperty(tileID,
-						"interact", "0"));
-				if (value == 1)/* Testing to see if method works */{
-					interact[xAxis][yAxis] = 1;
-				} else if (value == 2) {
-					interact[xAxis][yAxis] = 2;
-				}
+				interact[xAxis][yAxis] = Integer.parseInt(grassMap
+						.getTileProperty(tileID, "interact", "0"));
 			}
 		}
 		interactActive = new boolean[3];
-		moonAlpha = new float[] { 0f, 0f, 0f };
+		moonAlpha = new float[] { 0f, 0f };
+		moonlightSpawn = new int[grassMap.getLayerCount() - 1][grassMap
+				.getWidth()][grassMap.getHeight()];
+		for (int layerCount = 0; layerCount < (grassMap.getLayerCount() - 1); layerCount++) {
+			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+					int tileID = grassMap.getTileId(xAxis, yAxis, 1);
+					// Searching for tileID in 2nd layer (x,y,"1"); (see above)
+					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
+							.parseInt(grassMap.getTileProperty(tileID,
+									"moonlight", "0"));
+				}
+			}
+		}
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		grassMap.render((int) mapX, (int) mapY, 0);
-		charCurr.draw(384, 256);
-
-		// How to draw text to screen:
 
 		if (interactActive[1]) {
-			if (moonAlpha[1] > 0f) {
-				moonAlpha[1] -= 0.01f;
+			if (moonAlpha[0] > 0f) {
+				moonAlpha[0] -= 0.01f;
 			}
 			Color color = Color.red;
 			g.setColor(color);
 			g.drawString("Interact1", 20, 420);
 
-		} else if (moonAlpha[1] < 1f)
-			moonAlpha[1] += 0.01f;
-		white.setAlpha(moonAlpha[1]);
-		white.draw(mapX + (10 * SIZE), mapY, mapX + (9 * SIZE), mapY
-				+ (10 * SIZE), 32, 0, 0, 10 * SIZE);
+		} else if (moonAlpha[0] < 1f) {
+			moonAlpha[0] += 0.01f;
+		}
+
 		if (interactActive[2]) {
+			if (moonAlpha[1] > 0f) {
+				moonAlpha[1] -= 0.01f;
+			}
 			Color color = Color.red;
 			g.setColor(color);
 			g.drawString("Interact2", 20, 420);
-		} else {
-
+		} else if (moonAlpha[1] < 1f) {
+			moonAlpha[1] += 0.01f;
 		}
+
+		// Draw moonlight
+		drawMoonlight(g);
+
+		// drawChar
+		charCurr.draw(384, 256);
+
 		// Debuging info:
 		Color color = Color.red;
 		g.setColor(color);
@@ -144,6 +163,59 @@ public class InGameState extends BasicGameState {
 		g.drawString(Integer.toString((int) ((mapX * -1) / SIZE) + 12), 36, 108);
 		g.drawString(Integer.toString((int) ((mapY * -1) / SIZE) + 8), 36, 144);
 		g.drawString(Float.toString(moonAlpha[1]), 36, 160);
+
+	}
+
+	/**
+	 * Interpret the moonlightSpawn data to create moonlight at the right
+	 * places.
+	 * 
+	 * @param g
+	 */
+	private void drawMoonlight(Graphics g) {
+		// TODO Auto-generated method stub
+
+		/*
+		 * 
+		 * */
+		for (int layerCount = 0; layerCount < (grassMap.getLayerCount() - 1); layerCount++) {
+			int[][] spawnPosition = new int[4][2];
+			white.setAlpha(moonAlpha[layerCount]);
+			whiteTriangleLeft.setAlpha(moonAlpha[layerCount]);
+			whiteTriangleRight.setAlpha(moonAlpha[layerCount]);
+			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+					// TODO Rewrite this as switch?
+					if (moonlightSpawn[layerCount][xAxis][yAxis] == 7) {
+						spawnPosition[0][0] = xAxis * SIZE;
+						spawnPosition[0][1] = yAxis * SIZE;
+					}
+					if (moonlightSpawn[layerCount][xAxis][yAxis] == 9) {
+						spawnPosition[1][0] = xAxis * SIZE;
+						spawnPosition[1][1] = yAxis * SIZE;
+					}
+					if (moonlightSpawn[layerCount][xAxis][yAxis] == 1) {
+						spawnPosition[2][0] = xAxis * SIZE;
+						spawnPosition[2][1] = yAxis * SIZE;
+					}
+					if (moonlightSpawn[layerCount][xAxis][yAxis] == 3) {
+						spawnPosition[3][0] = xAxis * SIZE;
+						spawnPosition[3][1] = yAxis * SIZE;
+					}
+					if (moonlightSpawn[layerCount][xAxis][yAxis] == 8) {
+						white.draw(mapX + (xAxis * SIZE),
+								mapY + (yAxis * SIZE), SIZE, SIZE);
+					}
+				}
+			}
+			// draw(x,y,width,height)
+			whiteTriangleLeft.draw(mapX + spawnPosition[0][0], mapY
+					+ spawnPosition[0][1], SIZE, spawnPosition[2][1]
+					- (spawnPosition[0][1] - SIZE));
+			whiteTriangleRight.draw(mapX + spawnPosition[1][0], mapY
+					+ spawnPosition[0][1], SIZE, spawnPosition[3][1]
+					- (spawnPosition[0][1] - SIZE));
+		}
 
 	}
 
@@ -213,8 +285,6 @@ public class InGameState extends BasicGameState {
 		switch (dir) {
 		case 54:
 			int interactNumber4 = interact[(int) (playerX - 1)][(int) playerY];
-			// The additional +1 is to take into consideration the default value
-			// of a tile being 0.
 			interactActive[interactNumber4] = !interactActive[interactNumber4];
 			break;
 		case 56:
