@@ -55,17 +55,17 @@
  </tileset>
  <layer name="Tile Layer 1" width="60" height="30">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="moonlightSpawn for interact 1" width="60" height="30" opacity="0.51">
+ <layer name="moonlightSpawn for interact 1" width="60" height="30">
   <data encoding="base64" compression="zlib">
    eJztz6ENACAQBMEXNIZAUBbiBV2DoATEZ7ObnL1kIv7WW8S4m+3zcdHyeVMvMr3s9LLTy04vO73s9LLTy04vO73s9LLTy04vO73s1vPuot4D4/0oKw==
   </data>
  </layer>
- <layer name="moonLightSpawn for interact 2" width="60" height="30" opacity="0.39">
+ <layer name="moonLightSpawn for interact 2" width="60" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt1TEOABAMQNEOvZjB4FiGDm7NYGGnUf8l9v4QFQEAAAAAAD9LKpLHKeo9yR02e43ekOiNrc7e9kFv0vV+o//RtvVGf9P0ek90Fr3eE51Vt95Xd1IH+JsYHg==
+   eJztzyEOwCAURMEvuBgCwbEqENwaBBbTKuhMsnaTF/FeThFlrqYPJwdpq7fpvZLeuz2rt/+kFwAAAAAAdgba9wej
   </data>
  </layer>
 </map>

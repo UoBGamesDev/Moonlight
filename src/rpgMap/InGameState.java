@@ -105,13 +105,13 @@ public class InGameState extends BasicGameState {
 			}
 		}
 		interactActive = new boolean[3];
-		moonAlpha = new float[] { 0f, 0f };
-		moonlightSpawn = new int[grassMap.getLayerCount() - 1][grassMap
-				.getWidth()][grassMap.getHeight()];
-		for (int layerCount = 0; layerCount < (grassMap.getLayerCount() - 1); layerCount++) {
+		moonAlpha = new float[] { 0f, 0f, 0f };
+		moonlightSpawn = new int[grassMap.getLayerCount()][grassMap.getWidth()][grassMap
+				.getHeight()];
+		for (int layerCount = 0; layerCount < grassMap.getLayerCount(); layerCount++) {
 			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-					int tileID = grassMap.getTileId(xAxis, yAxis, 1);
+					int tileID = grassMap.getTileId(xAxis, yAxis, layerCount);
 					// Searching for tileID in 2nd layer (x,y,"1"); (see above)
 					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
 							.parseInt(grassMap.getTileProperty(tileID,
@@ -126,26 +126,26 @@ public class InGameState extends BasicGameState {
 		grassMap.render((int) mapX, (int) mapY, 0);
 
 		if (interactActive[1]) {
-			if (moonAlpha[0] > 0f) {
-				moonAlpha[0] -= 0.01f;
-			}
-			Color color = Color.red;
-			g.setColor(color);
-			g.drawString("Interact1", 20, 420);
-
-		} else if (moonAlpha[0] < 1f) {
-			moonAlpha[0] += 0.01f;
-		}
-
-		if (interactActive[2]) {
 			if (moonAlpha[1] > 0f) {
 				moonAlpha[1] -= 0.01f;
 			}
 			Color color = Color.red;
 			g.setColor(color);
-			g.drawString("Interact2", 20, 420);
+			g.drawString("Interact1", 20, 420);
+
 		} else if (moonAlpha[1] < 1f) {
 			moonAlpha[1] += 0.01f;
+		}
+
+		if (interactActive[2]) {
+			if (moonAlpha[2] > 0f) {
+				moonAlpha[2] -= 0.01f;
+			}
+			Color color = Color.red;
+			g.setColor(color);
+			g.drawString("Interact2", 20, 420);
+		} else if (moonAlpha[2] < 1f) {
+			moonAlpha[2] += 0.01f;
 		}
 
 		// Draw moonlight
@@ -162,7 +162,9 @@ public class InGameState extends BasicGameState {
 		g.setColor(Color.yellow);
 		g.drawString(Integer.toString((int) ((mapX * -1) / SIZE) + 12), 36, 108);
 		g.drawString(Integer.toString((int) ((mapY * -1) / SIZE) + 8), 36, 144);
-		g.drawString(Float.toString(moonAlpha[1]), 36, 160);
+		g.drawString(Float.toString(moonAlpha[0]), 36, 160);
+		g.drawString(Float.toString(moonAlpha[1]), 36, 180);
+		g.drawString(Float.toString(moonAlpha[2]), 36, 200);
 
 	}
 
@@ -173,36 +175,31 @@ public class InGameState extends BasicGameState {
 	 * @param g
 	 */
 	private void drawMoonlight(Graphics g) {
-		// TODO Auto-generated method stub
-
-		/*
-		 * 
-		 * */
-		for (int layerCount = 0; layerCount < (grassMap.getLayerCount() - 1); layerCount++) {
+		for (int layerCount = 0; layerCount < (grassMap.getLayerCount()); layerCount++) {
 			int[][] spawnPosition = new int[4][2];
 			white.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleLeft.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleRight.setAlpha(moonAlpha[layerCount]);
+			// count is used for debug
+			int count = 0;
 			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-					// TODO Rewrite this as switch?
+					// TODO Rewrite this as switch.
 					if (moonlightSpawn[layerCount][xAxis][yAxis] == 7) {
 						spawnPosition[0][0] = xAxis * SIZE;
 						spawnPosition[0][1] = yAxis * SIZE;
-					}
-					if (moonlightSpawn[layerCount][xAxis][yAxis] == 9) {
+						// Count for debug
+						count++;
+					} else if (moonlightSpawn[layerCount][xAxis][yAxis] == 9) {
 						spawnPosition[1][0] = xAxis * SIZE;
 						spawnPosition[1][1] = yAxis * SIZE;
-					}
-					if (moonlightSpawn[layerCount][xAxis][yAxis] == 1) {
+					} else if (moonlightSpawn[layerCount][xAxis][yAxis] == 1) {
 						spawnPosition[2][0] = xAxis * SIZE;
 						spawnPosition[2][1] = yAxis * SIZE;
-					}
-					if (moonlightSpawn[layerCount][xAxis][yAxis] == 3) {
+					} else if (moonlightSpawn[layerCount][xAxis][yAxis] == 3) {
 						spawnPosition[3][0] = xAxis * SIZE;
 						spawnPosition[3][1] = yAxis * SIZE;
-					}
-					if (moonlightSpawn[layerCount][xAxis][yAxis] == 8) {
+					} else if (moonlightSpawn[layerCount][xAxis][yAxis] == 8) {
 						white.draw(mapX + (xAxis * SIZE),
 								mapY + (yAxis * SIZE), SIZE, SIZE);
 					}
@@ -215,6 +212,9 @@ public class InGameState extends BasicGameState {
 			whiteTriangleRight.draw(mapX + spawnPosition[1][0], mapY
 					+ spawnPosition[0][1], SIZE, spawnPosition[3][1]
 					- (spawnPosition[0][1] - SIZE));
+			// Count and drawString are for debug.
+			g.drawString("Layer Count " + layerCount + "x count: " + count,
+					250, (layerCount * 100) + 10);
 		}
 
 	}
