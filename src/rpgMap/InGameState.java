@@ -67,7 +67,7 @@ public class InGameState extends BasicGameState {
 		// Images
 		bigSpriteSheet = new Image("data/tileSetWIP.png");
 		sheety = new SpriteSheet(bigSpriteSheet, 32, 32);
-		charDown = sheety.getSubImage(0, 3);
+		charDown = new Image("data/charDown.png");
 		charUp = sheety.getSubImage(1, 3);
 		charLeft = sheety.getSubImage(2, 3);
 		charRight = sheety.getSubImage(3, 3);
