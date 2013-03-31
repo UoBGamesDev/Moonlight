@@ -41,7 +41,7 @@ public class InGameState extends BasicGameState {
 	// arrays to store collision detection information and which interacts are
 	// active.
 	boolean blocked[][], interactActive[];
-	int[][] interact;
+	int[][] interact, initialTileID;
 	int[][][] moonlightSpawn;// Holds info on the spawnpoints of moonlight
 	// Size of the tiles to adjust the Tiled map syncing with collision
 	// detection and interaction arrays.
@@ -78,7 +78,8 @@ public class InGameState extends BasicGameState {
 		charCurr = charDown;
 		// Maps
 		grassMap = new TiledMap("data/grass1.tmx");
-
+		// TODO Make an object for each map that holds all of the array
+		// information needed.
 		// Blocked
 		blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -91,11 +92,13 @@ public class InGameState extends BasicGameState {
 				}
 			}
 		}
-		// Interact. Different int values can be stored to link to different
-		// actions. Be sure to explain what each int stands for and to increase
-		// the interactActive[] array, leaving it +1 of the final value (the
-		// default value for a tile without interaction is set as 0, so the
-		// array needs to count that as well).
+		initialTileID = new int[grassMap.getWidth()][grassMap.getHeight()];
+		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+				initialTileID[xAxis][yAxis] = grassMap.getTileId(xAxis, yAxis,
+						0);
+			}
+		}
 		interact = new int[grassMap.getWidth()][grassMap.getHeight()];
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
@@ -106,6 +109,8 @@ public class InGameState extends BasicGameState {
 		}
 		interactActive = new boolean[3];
 		moonAlpha = new float[] { 0f, 0f, 0f };
+		// TODO change interactActive and MoonAlpha to construct themselves
+		// based on how many values are needed
 		moonlightSpawn = new int[grassMap.getLayerCount()][grassMap.getWidth()][grassMap
 				.getHeight()];
 		for (int layerCount = 0; layerCount < grassMap.getLayerCount(); layerCount++) {
@@ -124,29 +129,7 @@ public class InGameState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		grassMap.render((int) mapX, (int) mapY, 0);
-
-		if (interactActive[1]) {
-			if (moonAlpha[1] > 0f) {
-				moonAlpha[1] -= 0.01f;
-			}
-			Color color = Color.red;
-			g.setColor(color);
-			g.drawString("Interact1", 20, 420);
-
-		} else if (moonAlpha[1] < 1f) {
-			moonAlpha[1] += 0.01f;
-		}
-
-		if (interactActive[2]) {
-			if (moonAlpha[2] > 0f) {
-				moonAlpha[2] -= 0.01f;
-			}
-			Color color = Color.red;
-			g.setColor(color);
-			g.drawString("Interact2", 20, 420);
-		} else if (moonAlpha[2] < 1f) {
-			moonAlpha[2] += 0.01f;
-		}
+		// grassMap.setTileId(13, 10, 0, 896);
 
 		// Draw moonlight
 		drawMoonlight(g);
@@ -175,6 +158,7 @@ public class InGameState extends BasicGameState {
 	 * @param g
 	 */
 	private void drawMoonlight(Graphics g) {
+		alphaMoonlight(g);
 		for (int layerCount = 0; layerCount < (grassMap.getLayerCount()); layerCount++) {
 			int[][] spawnPosition = new int[4][2];
 			white.setAlpha(moonAlpha[layerCount]);
@@ -216,7 +200,38 @@ public class InGameState extends BasicGameState {
 			g.drawString("Layer Count " + layerCount + "x count: " + count,
 					250, (layerCount * 100) + 10);
 		}
+	}
 
+	/**
+	 * Updates the moonAlpha array with accurate alpha float values based on
+	 * their value last time alphaMoonlight was run.
+	 * 
+	 * @param g
+	 */
+	private void alphaMoonlight(Graphics g) {
+		if (interactActive[1]) {
+			if (moonAlpha[1] > 0f) {
+				moonAlpha[1] -= 0.01f;
+
+			}
+			Color color = Color.red;
+			g.setColor(color);
+			g.drawString("Interact1", 20, 420);
+
+		} else if (moonAlpha[1] < 1f) {
+			moonAlpha[1] += 0.01f;
+		}
+
+		if (interactActive[2]) {
+			if (moonAlpha[2] > 0f) {
+				moonAlpha[2] -= 0.01f;
+			}
+			Color color = Color.red;
+			g.setColor(color);
+			g.drawString("Interact2", 20, 420);
+		} else if (moonAlpha[2] < 1f) {
+			moonAlpha[2] += 0.01f;
+		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -244,8 +259,37 @@ public class InGameState extends BasicGameState {
 				}
 			}
 		}
+		// Update tile info
+		updateTileInfo();
 		// if player finished in moonlight, die.
 		Display.sync(120);
+	}
+
+	// TODO finish.
+	private void updateTileInfo() {
+		for (int i = 0; i < interactActive.length; i++) {
+			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+					switch (interact[xAxis][yAxis]) {
+					case 1:
+						if (interactActive[interact[xAxis][yAxis]])
+							grassMap.setTileId(xAxis, yAxis, 0, 896);
+						else
+							grassMap.setTileId(xAxis, yAxis, 0,
+									initialTileID[xAxis][yAxis]);
+						break;
+					case 2:
+						if (interactActive[interact[xAxis][yAxis]])
+							grassMap.setTileId(xAxis, yAxis, 0, 897);
+						else
+							grassMap.setTileId(xAxis, yAxis, 0,
+									initialTileID[xAxis][yAxis]);
+						break;
+					}
+				}
+			}
+
+		}
 	}
 
 	/**
