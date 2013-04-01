@@ -8,7 +8,7 @@ public class MapObject {
 	TiledMap thisMap;
 	boolean blocked[][];
 	boolean interactActive[];
-	int[][] interact, initialTileID;
+	int[][] interact, initialTileID, talk;
 	int[][][] moonlightSpawn;
 	float[] moonAlpha;
 
@@ -46,6 +46,14 @@ public class MapObject {
 						.getTileProperty(tileID, "interact", "0"));
 			}
 		}
+		talk = new int[thisMap.getWidth()][thisMap.getHeight()];
+		for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
+			for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
+				int tileID = thisMap.getTileId(xAxis, yAxis, 0);
+				talk[xAxis][yAxis] = Integer.parseInt(thisMap.getTileProperty(
+						tileID, "talk", "0"));
+			}
+		}
 		interactActive = new boolean[interact.length];
 		moonAlpha = new float[interactActive.length];
 		// TODO change interactActive and MoonAlpha to construct themselves
@@ -71,13 +79,15 @@ public class MapObject {
 	public TiledMap getThisMap() {
 		return thisMap;
 	}
+
 	/**
 	 * Updates the moonAlpha array with accurate alpha float values based on
 	 * their value last time alphaMoonlight was run.
 	 * 
 	 * @param g
 	 */
-	public void alphaMoonlight(Graphics g, boolean interactActive[],float moonAlpha[]) {
+	public void alphaMoonlight(Graphics g, boolean interactActive[],
+			float moonAlpha[]) {
 		if (interactActive[1]) {
 			if (moonAlpha[1] > 0f) {
 				moonAlpha[1] -= 0.01f;

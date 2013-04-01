@@ -9,6 +9,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.Color;
 
@@ -22,8 +24,7 @@ public class InGameState extends BasicGameState {
 	/*
 	 * Create the TiledMaps to be used in the game.
 	 */
-	private TiledMap grassMap;
-	private MapObject mappy, currentMap;
+	private MapObject mappy, mappy2, currentMap;
 	private static int currentMapInt = 1;
 	/*
 	 * Create the image and spritesheets.
@@ -33,8 +34,8 @@ public class InGameState extends BasicGameState {
 	Image charDown, charLeft, charRight, charUp, charCurr, whiteSourse, white,
 			whiteTriangleRight, whiteTriangleLeft;
 	/*
-	 * Create variables to hold the player and map cooridantes (even though
-	 * they're both related and can be inferred from eachother) using playerX =
+	 * Create variables to hold the player and map coordinates (even though
+	 * they're both related and can be inferred from each other) using playerX =
 	 * ((mapX * -1) / SIZE) + 12; playerY = ((mapY * -1) / SIZE) + 8;
 	 */
 	static float mapX = 0, mapY = 0;
@@ -48,6 +49,7 @@ public class InGameState extends BasicGameState {
 	// ints to store which direction the map is moving and which way the player
 	// is facing.
 	int mapDirection = 2, facing = 8;
+
 	// float array to store the alpha values of moonlight
 
 	/**
@@ -76,13 +78,13 @@ public class InGameState extends BasicGameState {
 
 		charCurr = charDown;
 		// Maps
-		grassMap = new TiledMap("data/grass1.tmx");
-		mappy = new MapObject(grassMap);
+		mappy = new MapObject(new TiledMap("data/grass1.tmx"));
+		mappy2 = new MapObject(new TiledMap("data/grass2.tmx"));
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		grassMap.render((int) mapX, (int) mapY, 0);
+		currentMap.getThisMap().render((int) mapX, (int) mapY, 0);
 		// grassMap.setTileId(13, 10, 0, 896);
 
 		// Draw moonlight
@@ -99,9 +101,9 @@ public class InGameState extends BasicGameState {
 		g.setColor(Color.yellow);
 		g.drawString(Integer.toString((int) ((mapX * -1) / SIZE) + 12), 36, 108);
 		g.drawString(Integer.toString((int) ((mapY * -1) / SIZE) + 8), 36, 144);
-		//g.drawString(Float.toString(moonAlpha[0]), 36, 160);
-		//g.drawString(Float.toString(moonAlpha[1]), 36, 180);
-		//g.drawString(Float.toString(moonAlpha[2]), 36, 200);
+		// g.drawString(Float.toString(moonAlpha[0]), 36, 160);
+		// g.drawString(Float.toString(moonAlpha[1]), 36, 180);
+		// g.drawString(Float.toString(moonAlpha[2]), 36, 200);
 
 	}
 
@@ -111,17 +113,20 @@ public class InGameState extends BasicGameState {
 	 * 
 	 * @param g
 	 */
-	private void drawMoonlight(Graphics g, int moonlightSpawn[][][], float moonAlpha[]) {
-		currentMap.alphaMoonlight(g, currentMap.interactActive, currentMap.moonAlpha);
-		for (int layerCount = 0; layerCount < (grassMap.getLayerCount()); layerCount++) {
+	private void drawMoonlight(Graphics g, int moonlightSpawn[][][],
+			float moonAlpha[]) {
+		currentMap.alphaMoonlight(g, currentMap.interactActive,
+				currentMap.moonAlpha);
+		for (int layerCount = 0; layerCount < (currentMap.getThisMap()
+				.getLayerCount()); layerCount++) {
 			int[][] spawnPosition = new int[4][2];
 			white.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleLeft.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleRight.setAlpha(moonAlpha[layerCount]);
 			// count is used for debug
 			int count = 0;
-			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+			for (int xAxis = 0; xAxis < currentMap.getThisMap().getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < currentMap.getThisMap().getHeight(); yAxis++) {
 					// TODO Rewrite this as switch.
 					if (moonlightSpawn[layerCount][xAxis][yAxis] == 7) {
 						spawnPosition[0][0] = xAxis * SIZE;
@@ -156,11 +161,9 @@ public class InGameState extends BasicGameState {
 		}
 	}
 
-
-
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		currentMap=updateMap();
+		currentMap = updateMap();
 		Input input = gc.getInput();
 		updatePlayerPosition();
 		if (mapMoving) {
@@ -170,7 +173,7 @@ public class InGameState extends BasicGameState {
 			}
 		} else {
 			// input returns 2,4,6,8 if movement or 52,54,56,58 if interaction
-			int t = checkInput(input);
+			int t = checkInput(input,sbg);
 			if (t != 0)/* Input given */{
 				if (t < 10)/* if movement */{
 					charFacing(t);
@@ -185,37 +188,49 @@ public class InGameState extends BasicGameState {
 			}
 		}
 		// Update tile info
-		updateTileInfo(currentMap.interactActive, currentMap.interact, currentMap.initialTileID);
+		updateTileInfo(currentMap.interactActive, currentMap.interact,
+				currentMap.initialTileID);
 		// if player finished in moonlight, die.
 		Display.sync(120);
 	}
 
+	/**
+	 * Returns a MapObject based on currentMapInt.
+	 * 
+	 * @return
+	 */
 	private MapObject updateMap() {
 		switch (currentMapInt) {
 		case 1:
 			return mappy;
+		case 2:
+			return mappy2;
 		default:
 			return mappy;
 		}
 	}
 
-	private void updateTileInfo(boolean interactActive[], int interact[][], int initialTileID[][]) {
+	// TODO TileID needs sorting out
+	private void updateTileInfo(boolean interactActive[], int interact[][],
+			int initialTileID[][]) {
 		for (int i = 0; i < interactActive.length; i++) {
-			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+			for (int xAxis = 0; xAxis < currentMap.getThisMap().getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < currentMap.getThisMap().getHeight(); yAxis++) {
 					switch (interact[xAxis][yAxis]) {
 					case 1:
 						if (interactActive[interact[xAxis][yAxis]])
-							grassMap.setTileId(xAxis, yAxis, 0, 896);
+							currentMap.getThisMap().setTileId(xAxis, yAxis, 0,
+									896);
 						else
-							grassMap.setTileId(xAxis, yAxis, 0,
+							currentMap.getThisMap().setTileId(xAxis, yAxis, 0,
 									initialTileID[xAxis][yAxis]);
 						break;
 					case 2:
 						if (interactActive[interact[xAxis][yAxis]])
-							grassMap.setTileId(xAxis, yAxis, 0, 897);
+							currentMap.getThisMap().setTileId(xAxis, yAxis, 0,
+									897);
 						else
-							grassMap.setTileId(xAxis, yAxis, 0,
+							currentMap.getThisMap().setTileId(xAxis, yAxis, 0,
 									initialTileID[xAxis][yAxis]);
 						break;
 					}
@@ -264,26 +279,41 @@ public class InGameState extends BasicGameState {
 		switch (dir) {
 		case 54:
 			int interactNumber4 = interact[(int) (playerX - 1)][(int) playerY];
-			interactActive[interactNumber4] = !interactActive[interactNumber4];
+			if (interactNumber4 < 10) {
+				interactActive[interactNumber4] = !interactActive[interactNumber4];
+			} else if (interactNumber4 >= 10 && interactNumber4 < 30) {
+				displayText(interactNumber4);
+			}
 			break;
 		case 56:
 			int interactNumber6 = interact[(int) (playerX + 1)][(int) playerY];
-			interactActive[interactNumber6] = !interactActive[interactNumber6];
-
+			if (interactNumber6 < 10) {
+				interactActive[interactNumber6] = !interactActive[interactNumber6];
+			} else if (interactNumber6 >= 10 && interactNumber6 < 30) {
+				displayText(interactNumber6);
+			}
 			break;
 		case 52:
 			int interactNumber2 = interact[(int) (playerX)][(int) playerY + 1];
-			interactActive[interactNumber2] = !interactActive[interactNumber2];
-
+			if (interactNumber2 < 10) {
+				interactActive[interactNumber2] = !interactActive[interactNumber2];
+			} else if (interactNumber2 >= 10 && interactNumber2 < 30) {
+				displayText(interactNumber2);
+			}
 			break;
 		case 58:
 			int interactNumber8 = interact[(int) (playerX)][(int) playerY - 1];
-			interactActive[interactNumber8] = !interactActive[interactNumber8];
-
+			if (interactNumber8 < 10) {
+				interactActive[interactNumber8] = !interactActive[interactNumber8];
+			} else if (interactNumber8 >= 10 && interactNumber8 < 30) {
+				displayText(interactNumber8);
+			}
 			break;
 		}
 	}
-
+	public void displayText(int interactNumber){
+		
+	}
 	/**
 	 * Updates the direction of char facing.
 	 * 
@@ -313,7 +343,7 @@ public class InGameState extends BasicGameState {
 	 *            Up, Down, Left, Right, Spacebar.
 	 * @return int representing the key.
 	 */
-	private int checkInput(Input input) {
+	private int checkInput(Input input, StateBasedGame sbg) {
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			facing = 4;
 			return 4;
@@ -339,7 +369,15 @@ public class InGameState extends BasicGameState {
 			default:
 				break;
 			}
+		} else if (input.isKeyPressed(Input.KEY_2)){
+			sbg.enterState(3, new FadeOutTransition(), new FadeInTransition());
+		} else if (input.isKeyPressed(Input.KEY_1)){
+			sbg.enterState(2, new FadeOutTransition(), new FadeInTransition());
+		}else if (input.isKeyPressed(Input.KEY_0)){
+			sbg.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
+		
+		
 		return 0;
 	}
 
