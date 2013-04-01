@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="mini32" tilewidth="32" tileheight="32">
-  <image source="../James Graphics/mini32.png" trans="ffffff" width="256" height="256"/>
+  <image source="../James Graphics/mini32.png" width="512" height="512"/>
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFo3gUj+JRPIpJxADrnAGR
-  </data>
- </layer>
- <layer name="Tile Layer 2" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFgwmYIGFzILZAwiZQGiRuDMXI8sZYzOOAYnYgZsWDYeqQxUB6BKjkL3GomXJUMg/ZTGq5kVZmgszTo6J5IDeqUdE8EKBVOI6C4Q0A3aQFAw==
+   eJxjZGBgYBzFZGMOKGZHY7MjibGjyaPrQVbPSmU8DYinAvF0KBvGn4YkNhUJo6uZiqZmoMN7FI/iUTx4MADmvw4A
   </data>
  </layer>
 </map>

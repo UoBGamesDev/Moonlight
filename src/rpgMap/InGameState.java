@@ -78,7 +78,7 @@ public class InGameState extends BasicGameState {
 
 		charCurr = charDown;
 		// Maps
-		mappy = new MapObject(new TiledMap("data/grass1.tmx"));
+		mappy = new MapObject(new TiledMap("data/newGrass.tmx"));
 		mappy2 = new MapObject(new TiledMap("data/grass2.tmx"));
 	}
 
@@ -117,22 +117,19 @@ public class InGameState extends BasicGameState {
 			float moonAlpha[]) {
 		currentMap.alphaMoonlight(g, currentMap.interactActive,
 				currentMap.moonAlpha);
-		for (int layerCount = 0; layerCount < (currentMap.getThisMap()
+		for (int layerCount = 5; layerCount < (currentMap.getThisMap()
 				.getLayerCount()); layerCount++) {
 			int[][] spawnPosition = new int[4][2];
 			white.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleLeft.setAlpha(moonAlpha[layerCount]);
 			whiteTriangleRight.setAlpha(moonAlpha[layerCount]);
 			// count is used for debug
-			int count = 0;
 			for (int xAxis = 0; xAxis < currentMap.getThisMap().getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < currentMap.getThisMap().getHeight(); yAxis++) {
 					// TODO Rewrite this as switch.
 					if (moonlightSpawn[layerCount][xAxis][yAxis] == 7) {
 						spawnPosition[0][0] = xAxis * SIZE;
 						spawnPosition[0][1] = yAxis * SIZE;
-						// Count for debug
-						count++;
 					} else if (moonlightSpawn[layerCount][xAxis][yAxis] == 9) {
 						spawnPosition[1][0] = xAxis * SIZE;
 						spawnPosition[1][1] = yAxis * SIZE;
@@ -155,9 +152,6 @@ public class InGameState extends BasicGameState {
 			whiteTriangleRight.draw(mapX + spawnPosition[1][0], mapY
 					+ spawnPosition[0][1], SIZE, spawnPosition[3][1]
 					- (spawnPosition[0][1] - SIZE));
-			// Count and drawString are for debug.
-			g.drawString("Layer Count " + layerCount + "x count: " + count,
-					250, (layerCount * 100) + 10);
 		}
 	}
 

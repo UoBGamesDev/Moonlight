@@ -64,7 +64,7 @@ public class MapObject {
 		 * moonlightSpawn - reads the layer, location and type of moonlight
 		 * tile.
 		 */
-		for (int layerCount = 0; layerCount < thisMap.getLayerCount(); layerCount++) {
+		for (int layerCount = 5; layerCount < thisMap.getLayerCount(); layerCount++) {
 			for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
 					int tileID = thisMap.getTileId(xAxis, yAxis, layerCount);

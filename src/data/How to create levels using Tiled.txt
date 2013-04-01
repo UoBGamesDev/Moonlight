@@ -1,0 +1,37 @@
+----Intro----
+Tiled editor is a useful way to store information and create levels with artistic consistency and relative ease. For this reason, it's the program used to make levels in Moonlight. Read below for instructions on how to create levels that can be interpreted by the game engine.
+
+----Instructions----
+
+--Layers--
+Layers are used for drawing, moonlight, interaction and talk points.
+The first 5 layers are reserved for drawing (letting you 'layer' graphics) and the remaining layers are free to be used for all other purposes.
+
+--Tile Properties--
+The game engine uses various "tile properties" to let the player interact with the environment. Here is an explaination of what they do and how to use them:
+
+Property		Values taken
+-------------------------------------
+blocked			true, false
+interact		any integer value (1,2,786 etc)
+die			true, false
+moonlight		1,3,7,8,9
+talk			any integer value
+
+
+blocked:
+Tells the engine if the player can walk on the tile. Automatically set as false (not blocked) unless defined otherwise.
+
+FINISH-----------------------------------------------------
+interact:
+Makes a block 'interact active' and links it to all other blocks with the same value, so if one is pressed with value "1" it is equivelent to any of the "1" blocks being pressed. FINISH ME
+
+die:
+If the player coordinates finish on a tile with this property, the death scene is triggered.
+
+moonlight:
+Used to Spawn moonlight. Only one set of moonlight values can work per layer, so 1 interact value can only be linked to 1 moonlight trail (workaround may be possible - ask me to look into it if you want it added!). Use the numpad to work out the spawn values - 7 is top left, 9 is top right, 1 is bottom left, 3 is bottom right, 8 is solid light.
+
+FINISH--------------------------------------------------------
+talk:
+Gets people talking. Needs work.
