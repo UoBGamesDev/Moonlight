@@ -23,6 +23,8 @@ public class InGameState extends BasicGameState {
 	 * Create the TiledMaps to be used in the game.
 	 */
 	private TiledMap grassMap;
+	private MapObject mappy, currentMap;
+	private static int currentMapInt = 1;
 	/*
 	 * Create the image and spritesheets.
 	 */
@@ -35,22 +37,18 @@ public class InGameState extends BasicGameState {
 	 * they're both related and can be inferred from eachother) using playerX =
 	 * ((mapX * -1) / SIZE) + 12; playerY = ((mapY * -1) / SIZE) + 8;
 	 */
-	static float mapX = 0, mapY = 0, playerX = 0, playerY = 0;
+	static float mapX = 0, mapY = 0;
 	// Boolean to declare if the map's moving.
 	boolean mapMoving = false;
-	// arrays to store collision detection information and which interacts are
-	// active.
-	boolean blocked[][], interactActive[];
-	int[][] interact, initialTileID;
-	int[][][] moonlightSpawn;// Holds info on the spawnpoints of moonlight
 	// Size of the tiles to adjust the Tiled map syncing with collision
 	// detection and interaction arrays.
 	private static final int SIZE = 32;
+	static float playerX = ((mapX * -1) / SIZE) + 12,
+			playerY = ((mapY * -1) / SIZE) + 8;
 	// ints to store which direction the map is moving and which way the player
 	// is facing.
 	int mapDirection = 2, facing = 8;
 	// float array to store the alpha values of moonlight
-	float[] moonAlpha;
 
 	/**
 	 * Constructor to create this object.
@@ -65,6 +63,7 @@ public class InGameState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 		// Images
+
 		bigSpriteSheet = new Image("data/tileSetWIP.png");
 		sheety = new SpriteSheet(bigSpriteSheet, 32, 32);
 		charDown = new Image("data/charDown.png");
@@ -78,52 +77,7 @@ public class InGameState extends BasicGameState {
 		charCurr = charDown;
 		// Maps
 		grassMap = new TiledMap("data/grass1.tmx");
-		// TODO Make an object for each map that holds all of the array
-		// information needed.
-		// Blocked
-		blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
-				String value = grassMap.getTileProperty(tileID, "blocked",
-						"false");
-				if ("true".equals(value)) {
-					blocked[xAxis][yAxis] = true;
-				}
-			}
-		}
-		initialTileID = new int[grassMap.getWidth()][grassMap.getHeight()];
-		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-				initialTileID[xAxis][yAxis] = grassMap.getTileId(xAxis, yAxis,
-						0);
-			}
-		}
-		interact = new int[grassMap.getWidth()][grassMap.getHeight()];
-		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-				int tileID = grassMap.getTileId(xAxis, yAxis, 0);
-				interact[xAxis][yAxis] = Integer.parseInt(grassMap
-						.getTileProperty(tileID, "interact", "0"));
-			}
-		}
-		interactActive = new boolean[3];
-		moonAlpha = new float[] { 0f, 0f, 0f };
-		// TODO change interactActive and MoonAlpha to construct themselves
-		// based on how many values are needed
-		moonlightSpawn = new int[grassMap.getLayerCount()][grassMap.getWidth()][grassMap
-				.getHeight()];
-		for (int layerCount = 0; layerCount < grassMap.getLayerCount(); layerCount++) {
-			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-					int tileID = grassMap.getTileId(xAxis, yAxis, layerCount);
-					// Searching for tileID in 2nd layer (x,y,"1"); (see above)
-					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
-							.parseInt(grassMap.getTileProperty(tileID,
-									"moonlight", "0"));
-				}
-			}
-		}
+		mappy = new MapObject(grassMap);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -132,7 +86,7 @@ public class InGameState extends BasicGameState {
 		// grassMap.setTileId(13, 10, 0, 896);
 
 		// Draw moonlight
-		drawMoonlight(g);
+		drawMoonlight(g, currentMap.moonlightSpawn, currentMap.moonAlpha);
 
 		// drawChar
 		charCurr.draw(384, 256);
@@ -145,9 +99,9 @@ public class InGameState extends BasicGameState {
 		g.setColor(Color.yellow);
 		g.drawString(Integer.toString((int) ((mapX * -1) / SIZE) + 12), 36, 108);
 		g.drawString(Integer.toString((int) ((mapY * -1) / SIZE) + 8), 36, 144);
-		g.drawString(Float.toString(moonAlpha[0]), 36, 160);
-		g.drawString(Float.toString(moonAlpha[1]), 36, 180);
-		g.drawString(Float.toString(moonAlpha[2]), 36, 200);
+		//g.drawString(Float.toString(moonAlpha[0]), 36, 160);
+		//g.drawString(Float.toString(moonAlpha[1]), 36, 180);
+		//g.drawString(Float.toString(moonAlpha[2]), 36, 200);
 
 	}
 
@@ -157,8 +111,8 @@ public class InGameState extends BasicGameState {
 	 * 
 	 * @param g
 	 */
-	private void drawMoonlight(Graphics g) {
-		alphaMoonlight(g);
+	private void drawMoonlight(Graphics g, int moonlightSpawn[][][], float moonAlpha[]) {
+		currentMap.alphaMoonlight(g, currentMap.interactActive, currentMap.moonAlpha);
 		for (int layerCount = 0; layerCount < (grassMap.getLayerCount()); layerCount++) {
 			int[][] spawnPosition = new int[4][2];
 			white.setAlpha(moonAlpha[layerCount]);
@@ -202,42 +156,13 @@ public class InGameState extends BasicGameState {
 		}
 	}
 
-	/**
-	 * Updates the moonAlpha array with accurate alpha float values based on
-	 * their value last time alphaMoonlight was run.
-	 * 
-	 * @param g
-	 */
-	private void alphaMoonlight(Graphics g) {
-		if (interactActive[1]) {
-			if (moonAlpha[1] > 0f) {
-				moonAlpha[1] -= 0.01f;
 
-			}
-			Color color = Color.red;
-			g.setColor(color);
-			g.drawString("Interact1", 20, 420);
-
-		} else if (moonAlpha[1] < 1f) {
-			moonAlpha[1] += 0.01f;
-		}
-
-		if (interactActive[2]) {
-			if (moonAlpha[2] > 0f) {
-				moonAlpha[2] -= 0.01f;
-			}
-			Color color = Color.red;
-			g.setColor(color);
-			g.drawString("Interact2", 20, 420);
-		} else if (moonAlpha[2] < 1f) {
-			moonAlpha[2] += 0.01f;
-		}
-	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-
+		currentMap=updateMap();
 		Input input = gc.getInput();
+		updatePlayerPosition();
 		if (mapMoving) {
 			moveMap(mapDirection);
 			if (mapX % 32 == 0 && mapY % 32 == 0) {
@@ -249,24 +174,32 @@ public class InGameState extends BasicGameState {
 			if (t != 0)/* Input given */{
 				if (t < 10)/* if movement */{
 					charFacing(t);
-					boolean collDect = collDect(t);
+					boolean collDect = collDect(t, currentMap.blocked);
 					if (!collDect) {
 						mapMoving = true;
 						mapDirection = t;
 					}
 				} else/* interaction */{
-					intDect(t);
+					intDect(t, currentMap.interact, currentMap.interactActive);
 				}
 			}
 		}
 		// Update tile info
-		updateTileInfo();
+		updateTileInfo(currentMap.interactActive, currentMap.interact, currentMap.initialTileID);
 		// if player finished in moonlight, die.
 		Display.sync(120);
 	}
 
-	// TODO finish.
-	private void updateTileInfo() {
+	private MapObject updateMap() {
+		switch (currentMapInt) {
+		case 1:
+			return mappy;
+		default:
+			return mappy;
+		}
+	}
+
+	private void updateTileInfo(boolean interactActive[], int interact[][], int initialTileID[][]) {
 		for (int i = 0; i < interactActive.length; i++) {
 			for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
@@ -299,9 +232,8 @@ public class InGameState extends BasicGameState {
 	 *            the direction of intended movement
 	 * @return true if collision would occur, false if space is free.
 	 */
-	private boolean collDect(int dir) {
-		playerX = ((mapX * -1) / SIZE) + 12;
-		playerY = ((mapY * -1) / SIZE) + 8;
+	private boolean collDect(int dir, boolean blocked[][]) {
+
 		switch (dir) {
 		case 4:
 			if (blocked[(int) (playerX - 1)][(int) playerY])
@@ -323,9 +255,12 @@ public class InGameState extends BasicGameState {
 		return false;
 	}
 
-	private void intDect(int dir) {
+	private void updatePlayerPosition() {
 		playerX = ((mapX * -1) / SIZE) + 12;
 		playerY = ((mapY * -1) / SIZE) + 8;
+	}
+
+	private void intDect(int dir, int interact[][], boolean interactActive[]) {
 		switch (dir) {
 		case 54:
 			int interactNumber4 = interact[(int) (playerX - 1)][(int) playerY];
