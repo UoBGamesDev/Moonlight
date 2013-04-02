@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="mapNum" value="10"/>
+ </properties>
+ <tileset firstgid="1" name="magecity1" tilewidth="32" tileheight="32">
+  <image source="magecity1.png" trans="ffffff" width="256" height="1482"/>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="56">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="57">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="97">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="98">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="105">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="106">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="112">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="113">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="120">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="121">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="138">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="139">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="141">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="142">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="146">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="147">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="149">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="150">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="167">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="188">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="192">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="193">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="196">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="197">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="198">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="199">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="200">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="201">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="202">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="203">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="204">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="205">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="206">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="207">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="212">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="213">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="214">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="220">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="221">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="222">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="228">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="229">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="230">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="314">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="315">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="322">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="323">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="335">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="342">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="347">
+   <properties>
+    <property name="blocked" value="true"/>
+    <property name="interact" value="10"/>
+   </properties>
+  </tile>
+  <tile id="350">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="351">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="352">
+   <properties>
+    <property name="map" value="1"/>
+   </properties>
+  </tile>
+  <tile id="353">
+   <properties>
+    <property name="map" value="11"/>
+   </properties>
+  </tile>
+  <tile id="354">
+   <properties>
+    <property name="interact" value="1"/>
+   </properties>
+  </tile>
+  <tile id="355">
+   <properties>
+    <property name="interact" value="2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Floor" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzFl91u1TAQhG1exc6RKCDxIx6ipTctbSXgtVu46SXQG1rxCI1FRnwZNjRFMedIo5zEG3s8++NNStv+DjbG1r9d/oWzEaeG4+l6nn/bZbzTUKZn7TrkPvwK1hIquOj/MNkNAU/db/3T/i9MM+I84FrAVRxrJ/3atI/xb05zzahtD34l/+krf6b1S577VnxrJ35a72zBt8fQTzoxTsm7h3+174uAF+OPujLmqGUPftJkKT8jf3rMFdj14Bfp5/m7VP92xnFI20Lzrs1fxhrvxX3r8+jHA3CfVst3jakuPtkDfgY+ZZ4wXvfBTxyZS9X8Okwa7otfw3Wa+1UaKhad3+GII+Ddf+YnUFPan4w4Bd535HaX5jXRa00x/Q6NW09+dymudcxrYUk78fsMyPbKnhNfJr99BdbYu46evx9GfDR8GvFtxPcRN+CnZxFupvW0xuVKe/Y1ypWH6ov8wN5XmtwGthpT7Kg3oZYRPId5VZ403Np61bhpPdYAPat5HuN+Liz1BlFfuPSsQM8KHuzNGMvV1iM/cuFenCu18j02e57tO+hX0/qe4AXe557d7vnKeQie7c/A72l6fG/wEto1vP2HORr43mvgDfi9srG18HOftaJdvVeuZqeYj3qHS/C7nuZivisPom9CxunfcoLxSH4c835L985POeI1qWJu581x8uL7Uf4w3zwfpUHEj9/61d7hOek5Sm7eG2vMtY201tol4MfvPvqu5Dln1tTorJcta5mPcx+sW/dbQ7fF
+  </data>
+ </layer>
+ <layer name="on floor, under player" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlckOgjAQhjs318Q9Ji4vIvECGk6Gm97wNfSmT+40ESlDoZQ92C/5UzId6PC3DIwZukAfGBtAszVMIBRlirFZA/WdGvakK5xb6mNPUpfZ8+wcBa/WEI+1garP3gP1lIxpuWXiKd7vhXpLxrTcf0LlH8UvOZ/P31r2zYhwf+6mvh959kv3jBVB1w/d81wU3fqKendR3H+t4f3r3H+DIcCCqGj8IIjGLBK3KjjDDj7T/sqBaFyULbmmo5NQ3xDjI9RYUf8C55eoFckL+oML8ZgM3k9dyXzSPXMI105ji/M71F7I0/0X0T6UpS9tIFw7D7Jez9flfgSjD1F/vITrsvkAkv0iaQ==
+  </data>
+ </layer>
+ <layer name="roof" width="40" height="30" opacity="0.98">
+  <data encoding="base64" compression="zlib">
+   eJztlstOAjEUhss7ILIQ8a3c8BpeNqgb1A3qxkvi0rXuNBFFEFRAEyQ8Ef9J2qScHBg6HjNN4E++tHTOtN+UZKbG6KWrOBflXXm+ld/sjC3zkvX+JTlm7ecyNrJrLH4u3DE2P55l9PsE30r8/IOf9jNrhvvtgF2wB/YV16nk5H5SuF8VHIBDcKQh9sdwvxo4BifgNOHeN9ASaCvVS351cAbOwUWC3xfogaZtHX2leu5XAJfgClyDGzvunrvt3efGegLSeqH1kt+mbddB0auh526yedxecHhd2nrJz6UMtrzfQ/ALRiDPxiRGwjqh9fP8pNzadsO29+CB9f0xntD6UL87sAa27bvrETyZ6b4/xhNaH+pHKS1Ypxnya3i8eNee2bWsmPV9H5h0Z4QP0DF65w7t0H9C741Yzx3kR/u38ksX8ns1cfvFvn/L5DcBII3f5w==
+  </data>
+ </layer>
+ <layer name="leaves" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzrkKgDAUBdHE7ae10047/VFXcMVp06T0gdwD049zIiIi/zXSRDMttNJmehTa6aCTLrrpMT0Kee9cQilllFPhra9ERES+V1JlPRFRU2M9EdFSZz0R0dNgPSFRLyxdD/I=
+  </data>
+ </layer>
+ <layer name="more leaves" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1jEOgDAMQ9FUarn/YYGpILx47FSkZPhP8u7NjgAAYM+pXMqdXWRhKo/yZhdZ6C1iKEfLbgIAqLplVnXL7M8t64V20V+n6t/x16n6d/x1+DvY8QE3ZA/J
+  </data>
+ </layer>
+ <layer name="empty1" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAA4NcAEsAAAQ==
+  </data>
+ </layer>
+ <layer name="empty2" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAA4NcAEsAAAQ==
+  </data>
+ </layer>
+ <layer name="empty3" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAA4NcAEsAAAQ==
+  </data>
+ </layer>
+ <layer name="empty4" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAA4NcAEsAAAQ==
+  </data>
+ </layer>
+ <layer name="spawn layer" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1rENACAMA8FkVET2nyElTZAQ9V31hQdwBADwY+fpyvsOAAAmy4d81oW8ASw=
+  </data>
+ </layer>
+</map>

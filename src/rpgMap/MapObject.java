@@ -5,72 +5,47 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class MapObject {
+	int ID;
 	TiledMap thisMap;
-	boolean blocked[][];
+	boolean blocked[][][];
 	boolean interactActive[];
-	int[][] interact, initialTileID, talk;
+	int[][][] interact, initialTileID, talk, mapPoint;
 	int[][][] moonlightSpawn;
 	float[] moonAlpha;
+	float mapX, mapY, playerX, playerY;
 
 	MapObject(TiledMap may) {
 		thisMap = may;
-		/* Blocked - used in collision detection. */
-		blocked = new boolean[thisMap.getWidth()][thisMap.getHeight()];
-		for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
-				int tileID = thisMap.getTileId(xAxis, yAxis, 0);
-				String value = thisMap.getTileProperty(tileID, "blocked",
-						"false");
-				if ("true".equals(value)) {
-					blocked[xAxis][yAxis] = true;
-				}
-			}
-		}
-		/* initialTileID - used to store the values of tile ID at start. */
-		initialTileID = new int[thisMap.getWidth()][thisMap.getHeight()];
-		for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
-				initialTileID[xAxis][yAxis] = thisMap
-						.getTileId(xAxis, yAxis, 0);
-			}
-		}
-		/*
-		 * interact - reads the int values and positions of all of the interact
-		 * tiles.
-		 */
-		interact = new int[thisMap.getWidth()][thisMap.getHeight()];
-		for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
-				int tileID = thisMap.getTileId(xAxis, yAxis, 0);
-				interact[xAxis][yAxis] = Integer.parseInt(thisMap
-						.getTileProperty(tileID, "interact", "0"));
-			}
-		}
-		talk = new int[thisMap.getWidth()][thisMap.getHeight()];
-		for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
-				int tileID = thisMap.getTileId(xAxis, yAxis, 0);
-				talk[xAxis][yAxis] = Integer.parseInt(thisMap.getTileProperty(
-						tileID, "talk", "0"));
-			}
-		}
-		interactActive = new boolean[interact.length];
-		moonAlpha = new float[interactActive.length];
-		// TODO change interactActive and MoonAlpha to construct themselves
-		// based on how many values are needed
+		ID = Integer.parseInt(thisMap.getMapProperty("mapNum", "0"));
+		blocked = new boolean[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
+		initialTileID = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		interact = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		talk = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		moonAlpha = new float[thisMap.getLayerCount()];
 		moonlightSpawn = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
 				.getHeight()];
-		/*
-		 * moonlightSpawn - reads the layer, location and type of moonlight
-		 * tile.
-		 */
-		for (int layerCount = 5; layerCount < thisMap.getLayerCount(); layerCount++) {
+		mapPoint = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		// Get all the info for the arrays here.
+		for (int layerCount = 0; layerCount < thisMap.getLayerCount(); layerCount++) {
 			for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
 					int tileID = thisMap.getTileId(xAxis, yAxis, layerCount);
+					initialTileID[layerCount][xAxis][yAxis] = thisMap.getTileId(xAxis,
+							yAxis, 0);
+					interact[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
+							.getTileProperty(tileID, "interact", "0"));
+					talk[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
+							.getTileProperty(tileID, "talk", "0"));
+					mapPoint[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
+							.getTileProperty(tileID, "map", "0"));
 					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
 							.parseInt(thisMap.getTileProperty(tileID,
 									"moonlight", "0"));
+					if ("true".equals(thisMap.getTileProperty(tileID,
+							"blocked", "false"))) {
+						blocked[layerCount][xAxis][yAxis] = true;
+					}
 				}
 			}
 		}

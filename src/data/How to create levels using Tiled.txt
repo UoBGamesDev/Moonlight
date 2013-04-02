@@ -5,7 +5,7 @@ Tiled editor is a useful way to store information and create levels with artisti
 
 --Layers--
 Layers are used for drawing, moonlight, interaction and talk points.
-The first 5 layers are reserved for drawing (letting you 'layer' graphics) and the remaining layers are free to be used for all other purposes.
+The top layer will not be drawn and is used for spawn point.
 
 --Tile Properties--
 The game engine uses various "tile properties" to let the player interact with the environment. Here is an explaination of what they do and how to use them:
@@ -17,6 +17,7 @@ interact		any integer value (1,2,786 etc)
 die			true, false
 moonlight		1,3,7,8,9
 talk			any integer value
+map			1 and any int over 9 (10, 11, 786 etc)
 
 
 blocked:
@@ -35,3 +36,6 @@ Used to Spawn moonlight. Only one set of moonlight values can work per layer, so
 FINISH--------------------------------------------------------
 talk:
 Gets people talking. Needs work.
+
+map:
+spwn = 1, map move moves the map to the preset map with the corresponding number (eg city=10).

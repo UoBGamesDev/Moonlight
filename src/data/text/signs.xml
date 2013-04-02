@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<signs>
+  <sign>
+    <ID>1</ID>
+    <text>1st Sign</text>
+  </sign>
+    <sign>
+    <ID>2</ID>
+    <text>2nd Sign</text>
+  </sign>
+    <sign>
+    <ID>3</ID>
+    <text>3rd Sign</text>
+  </sign>
+    <sign>
+    <ID>4</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>5</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>6</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>7</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>8</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>9</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>10</ID>
+    <text>1st</text>
+  </sign>
+    <sign>
+    <ID>11</ID>
+    <text>2nd</text>
+  </sign>
+    <sign>
+    <ID>12</ID>
+    <text>text to print</text>
+  </sign>
+    <sign>
+    <ID>13</ID>
+    <text>text to print</text>
+  </sign>
+</signs>
