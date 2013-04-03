@@ -12,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class ConversationState extends BasicGameState {
 	int stateID = -1;
 	int interactNumber;
+	String[] stringy;
+	XMLReader mi;
 
 	/**
 	 * Constructor to create this object.
@@ -26,7 +28,9 @@ public class ConversationState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-
+		mi = new XMLReader();
+		interactNumber = MainClass.pi.interactNum;
+		stringy = mi.shoe;
 	}
 
 	@Override
@@ -34,7 +38,8 @@ public class ConversationState extends BasicGameState {
 			throws SlickException {
 		MainClass.pi.render(gc, sbg, g);
 		g.drawImage(new Image("data/textBackground.png"), 0, 0);
-		g.drawString(XMLReader.signs[interactNumber-1], 30, 420);
+		g.drawString(stringy[interactNumber-1], 30, 420);
+
 	}
 
 	@Override
@@ -42,15 +47,16 @@ public class ConversationState extends BasicGameState {
 			throws SlickException {
 		interactNumber = MainClass.pi.interactNum;
 		Input input = gc.getInput();
-		checkInput(input,sbg);
-		
+		checkInput(input, sbg);
+
 		Display.sync(120);
 	}
+
 	private void checkInput(Input input, StateBasedGame sbg) {
 
 		if (input.isKeyPressed(Input.KEY_A)) {
 			sbg.enterState(2);
-			
+
 		}/*
 		 * else if (input.isKeyPressed(Input.KEY_2)) { sbg.enterState(3, new
 		 * FadeOutTransition(), new FadeInTransition()); } else if
@@ -60,8 +66,8 @@ public class ConversationState extends BasicGameState {
 		 * FadeOutTransition(), new FadeInTransition()); }
 		 */
 
-
 	}
+
 	@Override
 	public int getID() {
 		return stateID;

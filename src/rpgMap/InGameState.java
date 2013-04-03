@@ -235,7 +235,7 @@ public class InGameState extends BasicGameState {
 	 * @return
 	 */
 	// TODO TileID needs sorting out
-	private void updateTileInfo(boolean interactActive[], int interact[][],
+	public void updateTileInfo(boolean interactActive[], int interact[][],
 			int initialTileID[][]) {
 		for (int i = 0; i < currentMap.getThisMap().getLayerCount(); i++) {
 			for (int xAxis = 0; xAxis < currentMap.getThisMap().getWidth(); xAxis++) {
@@ -317,7 +317,7 @@ public class InGameState extends BasicGameState {
 			for (int layerCount = 0; layerCount < currentMap.getThisMap()
 					.getLayerCount(); layerCount++) {
 				int interactNumber4 = interact[layerCount][(int) (playerX - 1)][(int) playerY];
-				if (interactNumber4>=1) {
+				if (interactNumber4 >= 1) {
 					interactNum = interactNumber4;
 					displayText(interactNumber4, sbg);
 				}
@@ -327,7 +327,7 @@ public class InGameState extends BasicGameState {
 			for (int layerCount = 0; layerCount < currentMap.getThisMap()
 					.getLayerCount(); layerCount++) {
 				int interactNumber6 = interact[layerCount][(int) (playerX + 1)][(int) playerY];
-				if (interactNumber6>=1) {
+				if (interactNumber6 >= 1) {
 					interactNum = interactNumber6;
 					displayText(interactNumber6, sbg);
 				}
@@ -337,7 +337,7 @@ public class InGameState extends BasicGameState {
 			for (int layerCount = 0; layerCount < currentMap.getThisMap()
 					.getLayerCount(); layerCount++) {
 				int interactNumber2 = interact[layerCount][(int) (playerX)][(int) playerY + 1];
-				if (interactNumber2>=1) {
+				if (interactNumber2 >= 1) {
 					interactNum = interactNumber2;
 					displayText(interactNumber2, sbg);
 				}
@@ -347,7 +347,7 @@ public class InGameState extends BasicGameState {
 			for (int layerCount = 0; layerCount < currentMap.getThisMap()
 					.getLayerCount(); layerCount++) {
 				int interactNumber8 = interact[layerCount][(int) (playerX)][(int) playerY - 1];
-				if (interactNumber8>=1) {
+				if (interactNumber8 >= 1) {
 					interactNum = interactNumber8;
 					displayText(interactNumber8, sbg);
 				}

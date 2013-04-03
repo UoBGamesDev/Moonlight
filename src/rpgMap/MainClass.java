@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainClass extends StateBasedGame {
 	static InGameState pi;
-	static XMLReader ri;
+
 	public MainClass() {
 		super("JRPG Main Class");
 	}
@@ -34,7 +34,6 @@ public class MainClass extends StateBasedGame {
 	 */
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		pi = new InGameState(2);
-		ri= new XMLReader();
 		this.addState(new MainMenuState(1));
 		this.addState(pi);
 		this.addState(new ConversationState(3));

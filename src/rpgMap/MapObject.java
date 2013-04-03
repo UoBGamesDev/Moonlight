@@ -19,26 +19,32 @@ public class MapObject {
 		ID = Integer.parseInt(thisMap.getMapProperty("mapNum", "0"));
 		blocked = new boolean[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
 				.getHeight()];
-		initialTileID = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
-		interact = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
-		talk = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		initialTileID = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
+		interact = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
+		talk = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
 		moonAlpha = new float[thisMap.getLayerCount()];
 		moonlightSpawn = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
 				.getHeight()];
-		mapPoint = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap.getHeight()];
+		mapPoint = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
 		// Get all the info for the arrays here.
 		for (int layerCount = 0; layerCount < thisMap.getLayerCount(); layerCount++) {
 			for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
 				for (int yAxis = 0; yAxis < thisMap.getHeight(); yAxis++) {
 					int tileID = thisMap.getTileId(xAxis, yAxis, layerCount);
-					initialTileID[layerCount][xAxis][yAxis] = thisMap.getTileId(xAxis,
-							yAxis, 0);
-					interact[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
-							.getTileProperty(tileID, "interact", "0"));
+					initialTileID[layerCount][xAxis][yAxis] = thisMap
+							.getTileId(xAxis, yAxis, 0);
+					interact[layerCount][xAxis][yAxis] = Integer
+							.parseInt(thisMap.getTileProperty(tileID,
+									"interact", "0"));
 					talk[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
 							.getTileProperty(tileID, "talk", "0"));
-					mapPoint[layerCount][xAxis][yAxis] = Integer.parseInt(thisMap
-							.getTileProperty(tileID, "map", "0"));
+					mapPoint[layerCount][xAxis][yAxis] = Integer
+							.parseInt(thisMap.getTileProperty(tileID, "map",
+									"0"));
 					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
 							.parseInt(thisMap.getTileProperty(tileID,
 									"moonlight", "0"));
