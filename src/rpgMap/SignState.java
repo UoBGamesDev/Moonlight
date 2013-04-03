@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class ConversationState extends BasicGameState {
+public class SignState extends BasicGameState {
 	int stateID = -1;
 	int interactNumber;
 	String[] stringy;
@@ -21,22 +21,22 @@ public class ConversationState extends BasicGameState {
 	 * @param stateID
 	 *            The stateID you want it to hold.
 	 */
-	ConversationState(int stateID) {
+	SignState(int stateID) {
 		this.stateID = stateID;
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		mi = new XMLReader();
-		interactNumber = MainClass.pi.interactNum;
-		stringy = mi.shoe;
+		mi = new XMLReader(MainClass.staticInGameState.currentMap.ID);
+		interactNumber = MainClass.staticInGameState.interactNum;
+		stringy = mi.signText;
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		MainClass.pi.render(gc, sbg, g);
+		MainClass.staticInGameState.render(gc, sbg, g);
 		g.drawImage(new Image("data/textBackground.png"), 0, 0);
 		g.drawString(stringy[interactNumber-1], 30, 420);
 
@@ -45,7 +45,7 @@ public class ConversationState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		interactNumber = MainClass.pi.interactNum;
+		interactNumber = MainClass.staticInGameState.interactNum;
 		Input input = gc.getInput();
 		checkInput(input, sbg);
 

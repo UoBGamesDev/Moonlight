@@ -13,16 +13,28 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class XMLReader {
-	String[] shoe;
+	String[] signText;
+	String xml10 = "<signs> 	<sign> 		<ID>1</ID> 		<text>1st Sign</text> 	</sign> 	<sign> 		<ID>2</ID> 		<text>2nd Sign</text> 	</sign>  </signs>";
+	String xml11 = "<sign11> 	<sign> 		<ID>1</ID> 		<text>1st Sign map2</text> 	</sign> 	<sign> 		<ID>2</ID> 		<text>2nd Sign map2</text> 	</sign>  </sign11>";
 
-	XMLReader() {
-		load();
+	XMLReader(int mapID) {
+		String loadString;
+		switch (mapID) {
+		case 10:
+			loadString = xml10;
+			break;
+		case 11:
+			loadString = xml11;
+			break;
+		default:
+			loadString = xml10;
+			break;
+		}
+		loadSigns(loadString);
 
 	}
 
-	public void load() {
-		String xml = "<signs>   <sign>     <ID>1</ID>     <text>1st Sign</text>   </sign>     <sign>     <ID>2</ID>     <text>2nd Sign</text>     </sign> </signs>";
-
+	public void loadSigns(String xml) {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -33,7 +45,7 @@ public class XMLReader {
 			Document doc = docBuilder.parse(is);
 			NodeList listOfSigns = doc.getElementsByTagName("sign");
 
-			shoe = new String[listOfSigns.getLength()];
+			signText = new String[listOfSigns.getLength()];
 
 			for (int s = 0; s < listOfSigns.getLength(); s++) {
 
@@ -61,7 +73,7 @@ public class XMLReader {
 					NodeList textTextist = signElement.getChildNodes(); //
 					System.out.println("Last Name : " + //
 							((Node) textTextist.item(0)).getNodeValue().trim());
-					shoe[s] = ((Node) textTextist.item(0)).getNodeValue()
+					signText[s] = ((Node) textTextist.item(0)).getNodeValue()
 							.trim();
 				}// end of if clause
 
@@ -74,8 +86,6 @@ public class XMLReader {
 			e.printStackTrace();
 		}
 	}
-
-	// System.exit (0);
 
 }// end of main
 

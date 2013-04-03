@@ -1,0 +1,43 @@
+Puzzle solutions:
+Single item:
+Dual item:
+Multiuse item:
+Mutliple ways to solve puzzle:
+item found in last place you look
+
+map control:
+physical blocks,
+continuous need (need breathing aparatus etc)
+map changes over time (earthquake)
+closing used areas?
+shortcuts (vehicles, physical shortcuts)
+limited access puzzles (small gap so can't get through with all of your gear)
+
+map features:
+segmented maps with single objectives.
+Toys (books with funny names, useless spells from a wand)
+river/coastline/important landscape features, nice vista?
+
+NPCs:
+Incidental character,
+sidekick
+What is their purpose?
+-conversation as a framing device
+-tutorial/hint system
+-conversation as a constraint (show player mental weaknesses)
+-padding to make the game longer
+wordless? (reacts only to gamestate/what actions have already been performed)
+
+
+reaching the end of the 'universe':
+"long road leads off..."
+locked door, poisonous gas, thick bushes, terrible threat,
+
+Plot development:
+force player to hide+overhear plot
+Enforce a sequence (upon entering map for first time...)
+Magicians choice: every direction leads the same way, giving a sense of pacing.
+
+general hints:
+force the player to reuse skills learnt early on in non-obvious ways, and reward them for doing so.
+every decision should have consequence.

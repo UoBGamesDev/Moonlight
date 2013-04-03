@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MainClass extends StateBasedGame {
-	static InGameState pi;
+	static InGameState staticInGameState;
 
 	public MainClass() {
 		super("JRPG Main Class");
@@ -33,10 +33,11 @@ public class MainClass extends StateBasedGame {
 	 *  is the basic game state object being added.
 	 */
 	public void initStatesList(GameContainer arg0) throws SlickException {
-		pi = new InGameState(2);
+		staticInGameState = new InGameState(2);
 		this.addState(new MainMenuState(1));
-		this.addState(pi);
-		this.addState(new ConversationState(3));
+		this.addState(staticInGameState);
+		this.addState(new SignState(3));
+		this.addState(new ChangeMapState(4));
 	}
 
 }

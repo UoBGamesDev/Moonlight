@@ -23,14 +23,15 @@ public class InGameState extends BasicGameState {
 	/*
 	 * Create the TiledMaps to be used in the game.
 	 */
-	private MapObject grass11, city10, currentMap;
+	private MapObject grass11, city10;
+	public MapObject currentMap;
 	/*
 	 * Create the image and spritesheets.
 	 */
 	Image bigSpriteSheet;
 	SpriteSheet sheety;
 	Image charDown, charLeft, charRight, charUp, charCurr, whiteSourse, white,
-			whiteTriangleRight, whiteTriangleLeft;
+			whiteTriangleRight, whiteTriangleLeft,lamplight;
 	/*
 	 * Create variables to hold the player and map coordinates (even though
 	 * they're both related and can be inferred from each other) using playerX =
@@ -46,7 +47,7 @@ public class InGameState extends BasicGameState {
 			playerY = ((mapY * -1) / SIZE) + 8;
 	// ints to store which direction the map is moving and which way the player
 	// is facing, along with what the player just interacted with.
-	public int mapDirection = 2, facing = 8, interactNum;
+	public int mapDirection = 2, facing = 8, interactNum, mapNum;
 
 	// float array to store the alpha values of moonlight
 
@@ -73,6 +74,7 @@ public class InGameState extends BasicGameState {
 		white = new Image("data/white.png");
 		whiteTriangleRight = new Image("data/45slopeWhite.png");
 		whiteTriangleLeft = whiteTriangleRight.getFlippedCopy(true, false);
+		lamplight = new Image("data/light.png");
 
 		charCurr = charDown;
 		// Maps
@@ -87,7 +89,6 @@ public class InGameState extends BasicGameState {
 		currentMap.getThisMap().render((int) mapX, (int) mapY, 0);
 		currentMap.getThisMap().render((int) mapX, (int) mapY, 1);
 		charCurr.draw(384, 256);
-
 		for (int i = 2; i < currentMap.getThisMap().getLayerCount() - 5; i++) {
 			// The -1 in layerCount is to compensate for spawn layer.
 			currentMap.getThisMap().render((int) mapX, (int) mapY, i);
@@ -96,6 +97,7 @@ public class InGameState extends BasicGameState {
 
 		// Draw moonlight
 		drawMoonlight(g, currentMap.moonlightSpawn, currentMap.moonAlpha);
+		drawLamplight(g, currentMap.lampostLight);
 
 		// Debuging info:
 		Color color = Color.red;
@@ -108,6 +110,20 @@ public class InGameState extends BasicGameState {
 		g.drawString(Float.toString(currentMap.moonAlpha[0]), 36, 160);
 		g.drawString(Float.toString(currentMap.moonAlpha[1]), 36, 180);
 		g.drawString(Float.toString(currentMap.moonAlpha[2]), 36, 200);
+
+	}
+
+	private void drawLamplight(Graphics g, int[][][] lampostLight) {
+		for (int layerCount = 0; layerCount < currentMap.getThisMap()
+				.getLayerCount(); layerCount++) {
+			for (int xAxis = 0; xAxis < currentMap.getThisMap().getWidth(); xAxis++) {
+				for (int yAxis = 0; yAxis < currentMap.getThisMap().getHeight(); yAxis++) {
+					if (lampostLight[layerCount][xAxis][yAxis]==1){
+						g.drawImage(lamplight,mapX+((xAxis-1)*SIZE),mapY+((yAxis-1)*SIZE));
+					}
+				}
+			}
+		}
 
 	}
 
@@ -319,7 +335,7 @@ public class InGameState extends BasicGameState {
 				int interactNumber4 = interact[layerCount][(int) (playerX - 1)][(int) playerY];
 				if (interactNumber4 >= 1) {
 					interactNum = interactNumber4;
-					displayText(interactNumber4, sbg);
+					displaySign(interactNumber4, sbg);
 				}
 			}
 			break;
@@ -329,7 +345,7 @@ public class InGameState extends BasicGameState {
 				int interactNumber6 = interact[layerCount][(int) (playerX + 1)][(int) playerY];
 				if (interactNumber6 >= 1) {
 					interactNum = interactNumber6;
-					displayText(interactNumber6, sbg);
+					displaySign(interactNumber6, sbg);
 				}
 			}
 			break;
@@ -339,7 +355,7 @@ public class InGameState extends BasicGameState {
 				int interactNumber2 = interact[layerCount][(int) (playerX)][(int) playerY + 1];
 				if (interactNumber2 >= 1) {
 					interactNum = interactNumber2;
-					displayText(interactNumber2, sbg);
+					displaySign(interactNumber2, sbg);
 				}
 			}
 			break;
@@ -349,7 +365,7 @@ public class InGameState extends BasicGameState {
 				int interactNumber8 = interact[layerCount][(int) (playerX)][(int) playerY - 1];
 				if (interactNumber8 >= 1) {
 					interactNum = interactNumber8;
-					displayText(interactNumber8, sbg);
+					displaySign(interactNumber8, sbg);
 				}
 			}
 			break;
@@ -361,7 +377,7 @@ public class InGameState extends BasicGameState {
 	 * 
 	 * @param interactNumber
 	 */
-	public void displayText(int interactNumber, StateBasedGame sbg) {
+	public void displaySign(int interactNumber, StateBasedGame sbg) {
 		sbg.enterState(3);
 	}
 

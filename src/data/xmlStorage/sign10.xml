@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sign10>
+	<sign>
+		<ID>1</ID>
+		<text>1st Sign</text>
+	</sign>
+	<sign>
+		<ID>2</ID>
+		<text>2nd Sign</text>
+	</sign>
+
+</sign10>

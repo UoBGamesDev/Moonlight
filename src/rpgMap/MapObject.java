@@ -9,7 +9,7 @@ public class MapObject {
 	TiledMap thisMap;
 	boolean blocked[][][];
 	boolean interactActive[];
-	int[][][] interact, initialTileID, talk, mapPoint;
+	int[][][] interact, initialTileID, talk, mapPoint, lampostLight;
 	int[][][] moonlightSpawn;
 	float[] moonAlpha;
 	float mapX, mapY, playerX, playerY;
@@ -30,6 +30,8 @@ public class MapObject {
 				.getHeight()];
 		mapPoint = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
 				.getHeight()];
+		lampostLight = new int[thisMap.getLayerCount()][thisMap.getWidth()][thisMap
+				.getHeight()];
 		// Get all the info for the arrays here.
 		for (int layerCount = 0; layerCount < thisMap.getLayerCount(); layerCount++) {
 			for (int xAxis = 0; xAxis < thisMap.getWidth(); xAxis++) {
@@ -48,6 +50,9 @@ public class MapObject {
 					moonlightSpawn[layerCount][xAxis][yAxis] = Integer
 							.parseInt(thisMap.getTileProperty(tileID,
 									"moonlight", "0"));
+					lampostLight[layerCount][xAxis][yAxis] = Integer
+							.parseInt(thisMap.getTileProperty(tileID,
+									"lampostLight", "0")); 
 					if ("true".equals(thisMap.getTileProperty(tileID,
 							"blocked", "false"))) {
 						blocked[layerCount][xAxis][yAxis] = true;
